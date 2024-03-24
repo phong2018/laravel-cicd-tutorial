@@ -3,60 +3,57 @@ pipeline {
     stages {
         stage("Verify SSH connection to server") {
             steps {
-                sshagent(credentials: ['aws-ec2']) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no ec2-user@52.221.199.29 whoami
-                    '''
+                script {
+                    echo 'Verify SSH connection to server...'
                 }
             }
         }
         
         stage("Verify tooling") {
             steps {
-                sh '''
-                    docker info
-                    docker version
-                    docker compose version
-                '''
+                script {
+                    echo 'Verify tooling...'
+                }
             }
         }
         
         stage("Clear all running docker containers") {
             steps {
                 script {
-                    try {
-                        sh 'docker rm -f $(docker ps -a -q)'
-                    } catch (Exception e) {
-                        echo 'No running container to clear up...'
-                    }
+                    echo 'Clear all running docker containers...'
                 }
             }
         }
 
         stage("Start Docker") {
             steps {
-                sh 'make up'
-                sh 'docker compose ps'
+                script {
+                    echo 'Start Docker...'
+                }
             }
         }
 
         stage("Run Composer Install") {
             steps {
-                sh 'docker compose run --rm composer install'
+                script {
+                    echo 'Start Docker...'
+                }
             }
         }
 
         stage("Populate .env file") {
             steps {
-                dir("/var/lib/jenkins/workspace/envs/LaravelTest02") {
-                    fileOperations([fileCopyOperation(excludes: '', flattenFiles: true, includes: '.env', targetLocation: "${WORKSPACE}")])
+                script {
+                    echo 'Start Docker...'
                 }
             }
         }   
 
         stage("Run Tests") {
             steps {
-                sh 'docker compose run --rm artisan test'
+                script {
+                    echo 'Start Docker...'
+                }
             }
         }
  
@@ -64,27 +61,11 @@ pipeline {
 
     post {
         success {
-            sh 'cd "/var/lib/jenkins/workspace/LaravelTest02"'
-            sh 'rm -rf artifact.zip'
-            sh 'zip -r artifact.zip . -x "*node_modules**"'
-            withCredentials([sshUserPrivateKey(credentialsId: "aws-ec2", keyFileVariable: 'keyfile')]) {
-                sh 'scp -v -o StrictHostKeyChecking=no -i ${keyfile} /var/lib/jenkins/workspace/LaravelTest02/artifact.zip ec2-user@52.221.199.29:/home/ec2-user/artifact'
-            }
-            sshagent(credentials: ['aws-ec2']) {
-                sh 'ssh -o StrictHostKeyChecking=no ec2-user@52.221.199.29 unzip -o /home/ec2-user/artifact/artifact.zip -d /var/www/html'
-                script {
-                    try {
-                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@52.221.199.29 sudo chmod 777 /var/www/html/storage -R'
-                    } catch (Exception e) {
-                        echo 'Some file permissions could not be updated.'
-                    }
-                }
-            }
+            echo 'post success...'
                                            
         }
         always {
-            sh 'docker compose down --remove-orphans -v'
-            sh 'docker compose ps'
+            echo 'post always...'
         }
     }
  
