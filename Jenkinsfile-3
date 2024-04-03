@@ -11,6 +11,14 @@ pipeline {
         }
      }
   }
+  agent agent-linux-001
+  stages {
+     stage("Verify agent linux") {
+        script {
+            echo 'Some file permissions could not be updated.'
+        }
+     }
+  }
 }
 
 
