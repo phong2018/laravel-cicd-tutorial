@@ -1,0 +1,1 @@
+RUN echo "HELLO WORLD DOCKER"
