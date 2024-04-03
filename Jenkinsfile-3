@@ -11,11 +11,11 @@ pipeline {
         }
      }
   }
-  agent {
-     label 'agent-linux-001'
-  }
   stages {
      stage("Verify agent linux") {
+        agent { 
+              label 'agent-linux-001'
+        }
         script {
             echo 'Some file permissions could not be updated.'
         }
