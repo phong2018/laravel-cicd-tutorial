@@ -1,7 +1,19 @@
+node('master') {
+  stage("Verify docker tooling in Master") {
+      steps {
+          sh '''
+              docker info
+              docker version
+              docker compose version
+          '''
+      }
+   }
+}
+
 pipeline {
-  agent master
+  agent none
   stages {
-     stage("Verify docker tooling") {
+     stage("Verify docker tooling in Agent") {
         steps {
             sh '''
                 docker info
