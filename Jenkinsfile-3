@@ -1,13 +1,15 @@
 pipeline {
   agent any
   stages {
-    stage('Test') {
-      steps {
-         script {
-            echo 'Verify docker tooling...'
-         }
-      }
-    }
+     stage("Verify docker tooling") {
+        steps {
+            sh '''
+                docker info
+                docker version
+                docker compose version
+            '''
+        }
+     }
   }
 }
 
