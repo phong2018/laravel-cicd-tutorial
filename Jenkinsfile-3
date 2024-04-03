@@ -11,7 +11,9 @@ pipeline {
         }
      }
   }
-  agent agent-linux-001
+  agent {
+     label agent-linux-001
+  }
   stages {
      stage("Verify agent linux") {
         script {
