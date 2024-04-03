@@ -1,1 +1,1 @@
-RUN echo "HELLO WORLD DOCKER"
+RUN echo "Hello Dockerfile"
