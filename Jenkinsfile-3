@@ -1,26 +1,22 @@
 pipeline {
-  agent any
-  stages {
-     stage("Verify docker tooling in Agent") {
-        steps {
-            sh '''
-                docker info
-                docker version
-                docker compose version
-            '''
+    agent any
+    stages {
+        stage("Verify docker tooling in Agent") {
+            steps {
+                sh '''
+                    docker info
+                    docker version
+                    docker-compose version
+                '''
+            }
         }
-     }
-  }
-  stages {
-     stage("Verify agent linux") {
-        agent { 
-              label 'agent-linux-001'
+        stage("Verify agent linux") {
+            agent { 
+                label 'agent-linux-001'
+            }
+            steps {
+                sh 'node --version'
+            }
         }
-        steps {
-        sh 'node --version'
-      }
-     }
-  }
+    }
 }
-
-
