@@ -10,6 +10,12 @@ pipeline {
                 '''
             }
         }
+        stage("Verify agent Docker") {
+            agent { dockerfile true }
+            steps {
+                sh 'docker version'
+            }
+        }
         stage("Verify agent linux") {
             agent { 
                 label 'agent-linux-001'
