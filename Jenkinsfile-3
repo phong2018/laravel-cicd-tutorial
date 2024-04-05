@@ -25,7 +25,10 @@ pipeline {
                 label 'agent-linux-001'
             }
             steps {
-                sh 'node --version'
+                sh '''
+                    node --version
+                    nginx -v
+                '''
             }
         }
     }
