@@ -13,7 +13,11 @@ pipeline {
         stage("Verify agent Docker") {
             agent { dockerfile true }
             steps {
-                sh 'docker version'
+                sh '''
+                    node --version
+                    git --version
+                    curl --version
+                '''
             }
         }
         stage("Verify agent linux") {
