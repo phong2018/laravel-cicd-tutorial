@@ -1,6 +1,7 @@
 pipeline {
     agent any
     stages {
+        // use docker in host pc
         stage("Verify docker tooling in Master") {
             steps {
                 sh '''
@@ -10,6 +11,7 @@ pipeline {
                 '''
             }
         }
+        // use agent by installing Docker Pipeline plugin
         stage("Verify agent Docker") {
             agent { dockerfile true }
             steps {
@@ -20,6 +22,8 @@ pipeline {
                 '''
             }
         }
+
+        // use agent by using ssh connect to vps
         stage("Verify agent linux") {
             agent { 
                 label 'agent-linux-001'
