@@ -11,6 +11,7 @@ pipeline {
                 '''
             }
         }
+
         // use agent by installing Docker Pipeline plugin
         stage("Verify agent Docker") {
             agent { dockerfile true }
