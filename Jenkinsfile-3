@@ -33,7 +33,7 @@ pipeline {
                 sh '''
                     node --version
                     nginx -v
-                    echo 'HELLO AGENT LINUX001'
+                    echo 'HELLO AGENT LINUX002'
                 '''
             }
         }
