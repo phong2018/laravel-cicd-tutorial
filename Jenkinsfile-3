@@ -31,9 +31,11 @@ pipeline {
             }
             steps {
                 sh '''
-                    node --version
                     nginx -v
-                    echo 'HELLO AGENT LINUX003'
+                    node -v
+                    npm -v
+                    php -v
+                    composer -v
                 '''
             }
         }
