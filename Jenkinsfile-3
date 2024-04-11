@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters {
+        booleanParam(name: 'ALLOW_SUPERUSER', defaultValue: true, description: 'Allow running composer as superuser?')
+    }
     stages {
         // use docker in host pc
         stage("Verify docker tooling in Master") {
@@ -31,12 +34,22 @@ pipeline {
             }
             steps {
                 sh '''
+                    whoami
                     nginx -v
                     node -v
                     npm -v
                     php -v
-                    whoami
                 '''
+                script {
+                    if (params.ALLOW_SUPERUSER) {
+                        echo "Running Composer as superuser"
+                        sh 'export COMPOSER_ALLOW_SUPERUSER=1'
+                        sh 'composer -v'
+                    } else {
+                        echo "Running Composer without superuser privileges"
+                        sh 'composer -v'
+                    }
+                }
             }
         }
     }
