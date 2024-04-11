@@ -35,7 +35,7 @@ pipeline {
                     node -v
                     npm -v
                     php -v
-                    composer -v
+                    whoami
                 '''
             }
         }
