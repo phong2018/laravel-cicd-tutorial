@@ -43,8 +43,10 @@ pipeline {
                 script {
                     if (params.ALLOW_SUPERUSER) {
                         echo "Running Composer as superuser"
-                        sh 'export COMPOSER_ALLOW_SUPERUSER=1'
-                        sh 'composer -v'
+                        sh '''
+                        export COMPOSER_ALLOW_SUPERUSER=1
+                        composer -v
+                        '''
                     } else {
                         echo "Running Composer without superuser privileges"
                         sh 'composer -v'
