@@ -40,6 +40,12 @@ pipeline {
                     npm -v
                     php -v
                 '''
+                dir('/var/www') {
+                    sh '''
+                        pwd
+                        ls -la
+                    '''
+                }
                 script {
                     if (params.ALLOW_SUPERUSER) {
                         echo "Running Composer as superuser"
